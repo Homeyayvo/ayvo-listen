@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090909">
+  <title>AYVO</title>
+  <meta name="description" content="Toute ta vie de beatmaker, au même endroit.">
+  <meta property="og:site_name" content="AYVO">
+  <meta property="og:title" content="AYVO">
+  <meta property="og:description" content="Toute ta vie de beatmaker, au même endroit.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://listen.ayvobeatmaker.com/ayvo-app-icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="ayvo-app-icon.png">
+  <link rel="apple-touch-icon" href="ayvo-app-icon.png">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090909;
+      --panel: rgba(255, 255, 255, .055);
+      --panel-hover: rgba(255, 255, 255, .085);
+      --line: rgba(255, 255, 255, .105);
+      --text: #f7f7f5;
+      --muted: #969694;
+      --green: #f4f4f1;
+      --green-soft: rgba(255, 255, 255, .075);
+      --beta-green: #2ee6b6;
+      --beta-green-soft: rgba(46, 230, 182, .13);
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    html { background: var(--bg); }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% -15%, rgba(46, 230, 182, .12), transparent 37rem),
+        radial-gradient(circle at 100% 90%, rgba(255, 255, 255, .035), transparent 34rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image: url("grain-texture-neutral.png");
+      background-size: 420px;
+      mix-blend-mode: soft-light;
+    }
+
+    main {
+      width: min(920px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: max(34px, env(safe-area-inset-top)) 0 max(44px, env(safe-area-inset-bottom));
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: clamp(72px, 11vw, 126px);
+    }
+
+    .wordmark {
+      width: 112px;
+      height: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid rgba(46, 230, 182, .25);
+      border-radius: 999px;
+      color: #bdf8e9;
+      background: var(--beta-green-soft);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--beta-green);
+      box-shadow: 0 0 14px var(--beta-green);
+    }
+
+    .hero { max-width: 730px; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(46px, 8vw, 88px);
+      line-height: .94;
+      letter-spacing: -.065em;
+      font-weight: 900;
+    }
+
+    .intro {
+      max-width: 560px;
+      margin: 25px 0 48px;
+      color: #aaa9a6;
+      font-size: clamp(17px, 2.2vw, 21px);
+      line-height: 1.55;
+    }
+
+    .account {
+      width: min(100%, 620px);
+      margin: 0 0 26px;
+      padding: clamp(22px, 4vw, 34px);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255,255,255,.05);
+      box-shadow: inset 0 1px rgba(255,255,255,.05), 0 24px 70px rgba(0,0,0,.2);
+      backdrop-filter: blur(25px);
+    }
+
+    .account[hidden], .downloads[hidden] { display: none; }
+    .account-kicker { margin: 0 0 10px; color: var(--green); font-size: 12px; font-weight: 900; letter-spacing: .12em; }
+    .account h2 { margin: 0; font-size: clamp(28px, 5vw, 42px); line-height: 1; letter-spacing: -.045em; }
+    .account-copy { margin: 13px 0 24px; color: var(--muted); font-size: 15px; line-height: 1.55; }
+    .account-form { display: grid; gap: 11px; }
+    .account-field { display: grid; gap: 7px; }
+    .account-field label { color: #b9b9b6; font-size: 12px; font-weight: 800; }
+    .account-field input {
+      width: 100%; height: 54px; padding: 0 16px; color: #fff; font: inherit; font-size: 16px;
+      border: 1px solid rgba(255,255,255,.11); border-radius: 16px; outline: none;
+      background: rgba(0,0,0,.27); transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .account-field input:focus { border-color: rgba(255,255,255,.58); box-shadow: 0 0 0 4px rgba(255,255,255,.075); }
+    .password-help { margin: -2px 0 3px; color: #747472; font-size: 12px; line-height: 1.45; }
+    .account-submit {
+      height: 55px; margin-top: 4px; border: 0; border-radius: 17px; color: #090909; background: var(--green);
+      font: inherit; font-size: 15px; font-weight: 900; cursor: pointer; transition: transform .18s ease, opacity .18s ease;
+    }
+    .account-submit:active { transform: scale(.98); }
+    .account-submit:disabled { cursor: wait; opacity: .55; }
+    .account-switch, .signout {
+      display: block; margin: 14px auto 0; padding: 5px; border: 0; color: #a6a6a3; background: none;
+      font: inherit; font-size: 13px; font-weight: 800; cursor: pointer;
+    }
+    .account-message { min-height: 20px; margin: 13px 0 0; color: #ef9999; font-size: 13px; line-height: 1.45; }
+    .account-message.success { color: #f2f2ef; }
+    .signed-in { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .signed-in strong { display: block; font-size: 18px; }
+    .signed-in span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
+    .signout { margin: 0; white-space: nowrap; }
+
+    .downloads {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .download {
+      position: relative;
+      min-height: 172px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .04);
+      backdrop-filter: blur(22px);
+      transition: transform .22s cubic-bezier(.2,.8,.2,1), border-color .22s ease, background .22s ease;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .download:not(.disabled):hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, .2);
+      background: var(--panel-hover);
+    }
+
+    .download:not(.disabled):active { transform: scale(.975); }
+
+    .download.mobile {
+      border-color: rgba(255, 255, 255, .15);
+      background: linear-gradient(140deg, rgba(255,255,255,.075), rgba(255,255,255,.025) 65%);
+    }
+
+    .platform {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .icon {
+      width: 47px;
+      height: 47px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 15px;
+      background: rgba(0,0,0,.26);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 24px;
+      transition: transform .2s ease, color .2s ease;
+    }
+
+    .download:not(.disabled):hover .arrow { transform: translate(2px, -2px); color: #fff; }
+
+    .label { margin-top: 25px; }
+    .label strong { display: block; font-size: 20px; letter-spacing: -.025em; }
+    .label span { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
+
+    .disabled { cursor: default; opacity: .68; }
+    .disabled .arrow { font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+    .download.sent {
+      border-color: rgba(46, 230, 182, .38);
+      background: linear-gradient(140deg, rgba(46,230,182,.14), rgba(46,230,182,.035) 70%);
+    }
+    .download.sent .arrow, .download.sent .label span { color: #9ff4dc; }
+
+    footer {
+      margin-top: 34px;
+      color: #686866;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      main { width: min(100% - 24px, 920px); }
+      header { margin-bottom: 72px; }
+      .wordmark { width: 94px; }
+      .badge { padding: 8px 11px; font-size: 10px; }
+      .intro { margin-bottom: 36px; }
+      .downloads { grid-template-columns: 1fr; }
+      .download { min-height: 152px; border-radius: 24px; }
+      .account { border-radius: 24px; }
+      .signed-in { align-items: flex-start; flex-direction: column; }
+      .signout { margin: 0; padding-left: 0; }
+    }
+    .listen-loading { min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 14px; text-align: center; }
+    .listen-loading img { width: 116px; filter: brightness(0) invert(1); }
+    .listen-loading h1 { margin: 18px 0 0; }
+    .listen-loading p { max-width: 390px; margin: 0; color: var(--muted); line-height: 1.55; }
+    .public-listen { position: relative; isolation: isolate; width: 100%; min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; padding: max(24px, env(safe-area-inset-top)) clamp(18px,5vw,68px) max(24px, env(safe-area-inset-bottom)); overflow: hidden; }
+    .listen-bg { position: fixed; z-index: -2; inset: -45px; background-image: var(--listen-cover), radial-gradient(circle at 50% 30%, #303035, #080809 68%); background-position: center; background-size: cover; filter: blur(34px) brightness(.28) saturate(.72); transform: scale(1.1); }
+    .public-listen::after { content:""; position:fixed; z-index:-1; inset:0; background:rgba(4,4,6,.5); }
+    .public-listen header { margin:0; display:flex; align-items:center; justify-content:space-between; }
+    .public-listen header img { width:104px; filter:brightness(0) invert(1); }
+    .public-listen header span,.listen-copy p { color:rgba(255,255,255,.62); font-size:10px; font-weight:900; letter-spacing:1.5px; }
+    .listen-player { width:min(530px,100%); margin:auto; display:flex; flex-direction:column; align-items:stretch; }
+    .listen-cover { width:min(430px,84vw); aspect-ratio:1; margin:clamp(28px,6vh,72px) auto 0; overflow:hidden; border-radius:30px; background:#18181b; box-shadow:0 30px 80px rgba(0,0,0,.48); }
+    .listen-cover img { width:100%; height:100%; object-fit:cover; }
+    .listen-cover-empty { width:100%; height:100%; display:grid; place-items:center; font-size:88px; font-weight:950; color:#777; }
+    .listen-copy { min-width:0; margin-top:clamp(30px,5vh,48px); text-align:center; }
+    .listen-copy p { margin:0 0 9px; text-transform:none; }
+    .listen-copy h1 { margin:0; overflow:hidden; text-overflow:ellipsis; font-size:clamp(27px,5vw,38px); letter-spacing:-1.2px; }
+    .listen-copy span { display:block; margin-top:9px; color:rgba(255,255,255,.66); font-size:12px; }
+    .listen-timeline { margin-top:30px; }
+    .listen-progress { --progress:0%; width:100%; height:22px; margin:0; appearance:none; -webkit-appearance:none; background:transparent; cursor:pointer; }
+    .listen-progress::-webkit-slider-runnable-track { height:4px; border-radius:999px; background:linear-gradient(90deg,#fff var(--progress),rgba(255,255,255,.24) var(--progress)); }
+    .listen-progress::-moz-range-track { height:4px; border-radius:999px; background:rgba(255,255,255,.24); }
+    .listen-progress::-moz-range-progress { height:4px; border-radius:999px; background:#fff; }
+    .listen-progress::-webkit-slider-thumb { width:13px; height:13px; margin-top:-4.5px; appearance:none; -webkit-appearance:none; border:0; border-radius:50%; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.45); opacity:0; transition:opacity .14s,transform .14s; }
+    .listen-progress::-moz-range-thumb { width:13px; height:13px; border:0; border-radius:50%; background:#fff; opacity:0; }
+    .listen-progress:hover::-webkit-slider-thumb,.listen-progress:focus-visible::-webkit-slider-thumb { opacity:1; transform:scale(1.08); }
+    .listen-progress:hover::-moz-range-thumb,.listen-progress:focus-visible::-moz-range-thumb { opacity:1; }
+    .listen-times { display:flex; justify-content:space-between; margin-top:-2px; color:rgba(255,255,255,.58); font-size:10px; font-weight:800; }
+    .listen-controls { position:relative; min-height:78px; display:grid; grid-template-columns:1fr 80px 1fr; align-items:center; margin-top:7px; }
+    .listen-toggle { grid-column:2; justify-self:center; width:66px; height:66px; border:0; border-radius:50%; display:grid; place-items:center; padding:0 0 1px 3px; background:#fff; color:#111; font-size:21px; font-weight:950; cursor:pointer; box-shadow:0 12px 32px rgba(0,0,0,.3); transition:transform .15s ease,filter .15s ease; }
+    .listen-toggle.playing { padding-left:0; }
+    .listen-toggle:hover { transform:scale(1.055); filter:brightness(.95); }
+    .listen-toggle:active { transform:scale(.96); }
+    .listen-loop { grid-column:3; justify-self:start; width:42px; height:42px; margin-left:13px; display:grid; place-items:center; padding:0; border:0; border-radius:50%; background:transparent; color:rgba(255,255,255,.64); cursor:pointer; transition:color .22s ease,transform .15s ease; }
+    .listen-loop svg { width:23px; height:23px; display:block; overflow:visible; transform-origin:50% 50%; }
+    .listen-loop.active { color:#16e879; }
+    .listen-loop:active { transform:scale(.92); }
+    .listen-loop.spinning svg { animation:listen-loop-spin .72s cubic-bezier(.35,.02,.2,1) both; }
+    @keyframes listen-loop-spin { 0% { transform:rotate(0); } 58% { transform:rotate(620deg); } 100% { transform:rotate(720deg); } }
+    .public-listen footer { display:grid; justify-items:center; gap:10px; text-align:center; color:rgba(255,255,255,.42); font-size:10px; letter-spacing:1px; }
+    .listen-return { min-height:38px; padding:0 17px; border:1px solid rgba(255,255,255,.14); border-radius:999px; background:rgba(255,255,255,.07); color:rgba(255,255,255,.78); font-size:10px; font-weight:850; cursor:pointer; backdrop-filter:blur(12px); transition:background .16s,color .16s,transform .16s; }
+    .listen-return:hover { background:rgba(255,255,255,.13); color:#fff; }
+    .listen-return:active { transform:scale(.97); }
+    @media (max-height:760px) { .listen-cover { width:min(305px,58vh); margin-top:20px; border-radius:25px; } .listen-copy { margin-top:22px; } .listen-timeline { margin-top:20px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img class="wordmark" src="ayvo-wordmark.png" alt="AYVO">
+      <span class="badge">Bêta privée</span>
+    </header>
+
+    <section class="hero">
+      <h1>Bienvenue dans<br>la bêta AYVO.</h1>
+      <p class="intro">Crée ton compte AYVO ici, puis utilise les mêmes identifiants dans l’application.</p>
+    </section>
+
+    <section class="account" id="auth-card" aria-labelledby="auth-title">
+      <p class="account-kicker">COMPTE AYVO</p>
+      <h2 id="auth-title">Crée ton compte.</h2>
+      <p class="account-copy" id="auth-copy">Ce compte sera aussi celui de l’application AYVO.</p>
+      <form class="account-form" id="auth-form">
+        <div class="account-field" id="email-field"><label for="email">Adresse e-mail</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="account-field" id="password-field"><label for="password" id="password-label">Mot de passe</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="6" maxlength="72" required></div>
+        <div class="account-field" id="confirmation-field" hidden><label for="confirmation">Confirmer le mot de passe</label><input id="confirmation" name="confirmation" type="password" autocomplete="new-password" minlength="12" maxlength="72"></div>
+        <p class="password-help" id="password-help" hidden>12 caractères minimum · une majuscule · un chiffre · un caractère spécial</p>
+        <button class="account-submit" id="auth-submit" type="submit">Créer mon compte AYVO</button>
+      </form>
+      <button class="account-submit" id="resend-email" type="button" hidden>Renvoyer le mail</button>
+      <button class="account-switch" id="auth-switch" type="button">J’ai déjà un compte</button>
+      <p class="account-message" id="auth-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="account" id="session-card" hidden>
+      <div class="signed-in"><div><p class="account-kicker">COMPTE AYVO</p><strong id="access-title">Débloque ton accès ambassadeur.</strong><span id="session-email"></span></div><button class="signout" id="signout" type="button">Se déconnecter</button></div>
+      <p class="account-copy" id="access-copy">Le pack ambassadeur coûte 20 €. Il donne accès à la bêta, puis à quatre mois offerts à partir de la sortie publique.</p>
+      <button class="account-submit" id="ambassador-checkout" type="button">Rejoindre la bêta · 20 €</button>
+      <p class="account-message" id="access-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="downloads" id="downloads" aria-label="Téléchargements AYVO" hidden>
+      <a class="download mobile" href="https://testflight.apple.com/join/Akj7WDgj">
+        <div class="platform"><span class="icon"></span><span class="arrow">↗</span></div>
+        <div class="label"><strong>iPhone</strong><span>Installer avec TestFlight</span></div>
+      </a>
+
+      <button class="download mobile" id="android-invite" type="button">
+        <div class="platform"><span class="icon">A</span><span class="arrow" id="android-invite-state">↗</span></div>
+        <div class="label"><strong>Android</strong><span id="android-invite-copy">Recevoir mon mail d’invitation</span></div>
+      </button>
+
+      <a class="download" href="https://github.com/Homeyayvo/ayvo-ambassadors/releases/download/v1.0.28/AYVO-1.0.28-arm64.pkg">
+        <div class="platform"><span class="icon"></span><span class="arrow">↗</span></div>
+        <div class="label"><strong>Mac</strong><span>AYVO 1.0.28 · Apple Silicon</span></div>
+      </a>
+
+      <a class="download" href="https://github.com/Homeyayvo/ayvo-ambassadors/releases/download/v1.0.28/AYVO-1.0.28-Windows-Setup-x64.exe">
+        <div class="platform"><span class="icon">⊞</span><span class="arrow">↗</span></div>
+        <div class="label"><strong>Windows</strong><span>AYVO 1.0.28 · 64 bits</span></div>
+      </a>
+    </section>
+
+    <footer>Accès réservé aux ambassadeurs AYVO.</footer>
+  </main>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const supabase = createClient(
+      'https://fmowmheudvczipexpyws.supabase.co',
+      'sb_publishable_HA2jw5Lrte6dKf2NtpYYGA_48RtY3Xh',
+      { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'pkce' } }
+    );
+    const listenParams = new URLSearchParams(location.search);
+    const listenToken = listenParams.get('listen');
+    const dedicatedListenHost = location.hostname === 'listen.ayvobeatmaker.com';
+    const localPlayerPreview = ['localhost', '127.0.0.1'].includes(location.hostname) && listenParams.get('preview-player') === '1';
+    if (dedicatedListenHost && !listenToken) {
+      document.body.innerHTML = '<main class="listen-loading"><img src="ayvo-wordmark.png" alt="AYVO"><h1>Lien d’écoute manquant</h1><p>Ouvre le lien complet qui t’a été partagé pour écouter la prod.</p></main>';
+      await new Promise(() => {});
+    }
+    if (localPlayerPreview || (listenToken && /^(?:[a-f0-9]{64}|[A-Za-z0-9_-]{20,64})$/.test(listenToken))) {
+      const safe = (value = '') => String(value).replace(/[&<>'"]/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' })[character]);
+      document.body.innerHTML = '<main class="listen-loading"><img src="ayvo-wordmark.png" alt="AYVO"><p>Chargement de la prod…</p></main>';
+      const response = localPlayerPreview ? { ok: true } : await fetch(`https://fmowmheudvczipexpyws.supabase.co/functions/v1/get-shared-item?token=${encodeURIComponent(listenToken)}`, { headers: { apikey: 'sb_publishable_HA2jw5Lrte6dKf2NtpYYGA_48RtY3Xh' } });
+      const shared = localPlayerPreview ? {
+        author: 'Omei',
+        item: {
+          title: 'Nouvelle prod',
+          bpm: 126,
+          musicalKey: 'F# min',
+          imageUri: 'http://localhost:8080/assets/themes/ayvo-theme-orchidee.jpg',
+          exportedAudioUri: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=',
+        },
+      } : await response.json().catch(() => ({}));
+      const item = shared.item || {};
+      const audioUrl = item.exportedAudioUri || item.workingPreviewUri;
+      if (!response.ok || !audioUrl) {
+        document.body.innerHTML = '<main class="listen-loading"><img src="ayvo-wordmark.png" alt="AYVO"><h1>Lien indisponible</h1><p>Cette prod a expiré, a été retirée ou ne possède plus de fichier audio.</p></main>';
+        await new Promise(() => {});
+      }
+      const cover = item.imageUri || '';
+      const title = String(item.title || item.exportedAudioName || item.workingPreviewName || 'Prod AYVO').replace(/\.(wav|mp3|aiff?|flac|m4a)$/i, '');
+      const details = [item.bpm ? `${safe(item.bpm)} BPM` : '', item.musicalKey ? safe(item.musicalKey) : ''].filter(Boolean).join(' · ');
+      document.title = `${shared.author || 'Artiste AYVO'} — ${title} — AYVO`;
+      document.body.innerHTML = `<main class="public-listen" style="--listen-cover:${cover ? `url('${safe(cover)}')` : 'none'}"><div class="listen-bg"></div><header><img src="ayvo-wordmark.png" alt="AYVO"><span>PARTAGE AUDIO</span></header><section class="listen-player"><div class="listen-cover">${cover ? `<img src="${safe(cover)}" alt="Cover de ${safe(title)}">` : '<div class="listen-cover-empty">A</div>'}</div><div class="listen-copy"><p>Partagé par ${safe(shared.author || 'un artiste AYVO')}</p><h1>${safe(title)}</h1><span>${details || 'Écoute partagée avec AYVO'}</span></div><audio src="${safe(audioUrl)}" preload="metadata" autoplay></audio><div class="listen-timeline"><input class="listen-progress" type="range" min="0" max="1000" value="0" aria-label="Position dans la prod"><div class="listen-times"><span>0:00</span><span>0:00</span></div></div><div class="listen-controls"><button class="listen-toggle" type="button" aria-label="Lecture ou pause">▶</button><button class="listen-loop" type="button" aria-label="Lire la prod en boucle" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6.4A7 7 0 0 1 18.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m18.5 5.7.1 3.4-3.4.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.8 17.6A7 7 0 0 1 5.5 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m5.5 18.3-.1-3.4 3.4-.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></section><footer><button class="listen-return" type="button">← Retour à la conversation</button><span>Partagé avec AYVO</span></footer></main>`;
+      const audio = document.querySelector('audio');
+      const toggle = document.querySelector('.listen-toggle');
+      const progress = document.querySelector('.listen-progress');
+      const loop = document.querySelector('.listen-loop');
+      const returnButton = document.querySelector('.listen-return');
+      const current = document.querySelector('.listen-times span:first-child');
+      const duration = document.querySelector('.listen-times span:last-child');
+      const format = seconds => {
+        const value = Number.isFinite(Number(seconds)) ? Math.max(0, Number(seconds)) : 0;
+        return `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, '0')}`;
+      };
+      const refresh = () => {
+        toggle.textContent = audio.paused ? '▶' : 'Ⅱ';
+        toggle.classList.toggle('playing', !audio.paused);
+        current.textContent = format(audio.currentTime);
+        duration.textContent = format(audio.duration);
+        const ratio = audio.duration ? audio.currentTime / audio.duration : 0;
+        progress.value = String(Math.round(ratio * 1000));
+        progress.style.setProperty('--progress', `${ratio * 100}%`);
+      };
+      toggle.addEventListener('click', () => audio.paused ? audio.play() : audio.pause());
+      progress.addEventListener('input', () => { if (audio.duration) audio.currentTime = (Number(progress.value) / 1000) * audio.duration; });
+      loop.addEventListener('click', () => {
+        audio.loop = !audio.loop;
+        loop.classList.toggle('active', audio.loop);
+        loop.classList.remove('spinning');
+        void loop.offsetWidth;
+        loop.classList.add('spinning');
+        loop.setAttribute('aria-pressed', String(audio.loop));
+      });
+      loop.addEventListener('animationend', () => loop.classList.remove('spinning'));
+      returnButton.addEventListener('click', () => {
+        if (history.length > 1) history.back();
+        else window.close();
+      });
+      ['play','pause','timeupdate','durationchange','loadedmetadata'].forEach(name => audio.addEventListener(name, refresh));
+      audio.play().catch(() => refresh());
+      await new Promise(() => {});
+    }
+    const form = document.querySelector('#auth-form');
+    const card = document.querySelector('#auth-card');
+    const sessionCard = document.querySelector('#session-card');
+    const downloads = document.querySelector('#downloads');
+    const title = document.querySelector('#auth-title');
+    const copy = document.querySelector('#auth-copy');
+    const emailField = document.querySelector('#email-field');
+    const passwordField = document.querySelector('#password-field');
+    const passwordLabel = document.querySelector('#password-label');
+    const confirmationField = document.querySelector('#confirmation-field');
+    const confirmation = document.querySelector('#confirmation');
+    const password = document.querySelector('#password');
+    const passwordHelp = document.querySelector('#password-help');
+    const submit = document.querySelector('#auth-submit');
+    const switchButton = document.querySelector('#auth-switch');
+    const message = document.querySelector('#auth-message');
+    const sessionEmail = document.querySelector('#session-email');
+    const resendEmail = document.querySelector('#resend-email');
+    const ambassadorCheckout = document.querySelector('#ambassador-checkout');
+    const accessTitle = document.querySelector('#access-title');
+    const accessCopy = document.querySelector('#access-copy');
+    const accessMessage = document.querySelector('#access-message');
+    const androidInvite = document.querySelector('#android-invite');
+    const androidInviteState = document.querySelector('#android-invite-state');
+    const androidInviteCopy = document.querySelector('#android-invite-copy');
+    const PUBLIC_AUTH_REDIRECT = 'https://beta.ayvobeatmaker.com/';
+    const PENDING_KEY = 'ayvo.web.pending-signup';
+    const billingParams = new URLSearchParams(location.search);
+    const billingStatus = billingParams.get('billing');
+    if (['success', 'cancelled', 'return'].includes(billingStatus)) {
+      const sessionId = billingParams.get('session_id') || '';
+      const nativeQuery = sessionId ? `?session_id=${encodeURIComponent(sessionId)}` : '';
+      const nativeUrl = `ayvo://billing/${billingStatus}${nativeQuery}`;
+      const successful = billingStatus === 'success';
+      document.body.innerHTML = `<main style="min-height:100vh;display:grid;place-items:center;padding:28px;background:#0d0d0f;color:#fff;text-align:center;font-family:Arial,sans-serif"><section style="width:min(440px,100%);padding:34px 25px;border:1px solid rgba(255,255,255,.12);border-radius:30px;background:rgba(255,255,255,.07);box-shadow:0 30px 90px rgba(0,0,0,.45)"><div style="width:58px;height:58px;margin:0 auto 20px;display:grid;place-items:center;border-radius:50%;background:${successful ? '#25a761' : '#343438'};font-size:28px">${successful ? '✓' : '↩'}</div><p style="margin:0;color:#999;font-size:10px;font-weight:900;letter-spacing:1.5px">${successful ? 'PAIEMENT CONFIRMÉ' : billingStatus === 'cancelled' ? 'PAIEMENT ANNULÉ' : 'ABONNEMENT'}</p><h1 style="margin:9px 0 8px;font-size:30px">Retour dans AYVO</h1><p style="margin:0 0 24px;color:#aaa;line-height:1.55">${successful ? 'Ton abonnement est en cours d’activation. AYVO va maintenant se rouvrir.' : 'AYVO va maintenant se rouvrir.'}</p><a href="${nativeUrl}" style="display:flex;min-height:55px;align-items:center;justify-content:center;border-radius:18px;background:#fff;color:#111;text-decoration:none;font-weight:900">Ouvrir AYVO</a><p style="margin:17px 0 0;color:#737378;font-size:11px">Si l’application ne s’ouvre pas automatiquement, appuie sur le bouton.</p></section></main>`;
+      setTimeout(() => { location.href = nativeUrl; }, 180);
+      await new Promise(() => {});
+    }
+    let mode = 'signup';
+    let pendingTimer;
+    let pendingSignup;
+
+    const setMessage = (text = '', success = false) => {
+      message.textContent = text;
+      message.classList.toggle('success', success);
+    };
+    const refreshAmbassadorAccess = async (session) => {
+      if (!session?.user) return;
+      const { data } = await supabase.from('subscriptions').select('ambassador_status,ambassador_benefit_ends_at').eq('user_id', session.user.id).maybeSingle();
+      const active = data?.ambassador_status === 'beta' || data?.ambassador_status === 'benefit_active';
+      ambassadorCheckout.hidden = active;
+      downloads.hidden = !active;
+      accessTitle.textContent = active ? 'Ton accès ambassadeur est actif.' : 'Débloque ton accès ambassadeur.';
+      accessCopy.textContent = active
+        ? data.ambassador_status === 'beta' ? 'Tu as accès à la bêta. Tes quatre mois offerts commenceront à la sortie publique.' : `Tes quatre mois sont actifs jusqu’au ${new Intl.DateTimeFormat('fr-FR', { day:'numeric', month:'long', year:'numeric' }).format(new Date(data.ambassador_benefit_ends_at))}.`
+        : 'Le pack ambassadeur coûte 20 €. Il donne accès à la bêta, puis à quatre mois offerts à partir de la sortie publique.';
+    };
+    const confirmReturnedPayment = async (session) => {
+      const params = new URLSearchParams(location.search);
+      const sessionId = params.get('session_id');
+      if (params.get('ambassador') !== 'success' || !sessionId || !session?.user) return false;
+      ambassadorCheckout.hidden = true;
+      accessTitle.textContent = 'Validation de ton accès…';
+      accessCopy.textContent = 'Ton paiement est confirmé. AYVO prépare tes téléchargements et invitations.';
+      accessMessage.textContent = '';
+      const { data, error } = await supabase.functions.invoke('confirm-ambassador-checkout', {
+        body: { sessionId },
+      });
+      if (error || !data?.paid) {
+        ambassadorCheckout.hidden = false;
+        accessTitle.textContent = 'Paiement reçu, validation en cours.';
+        accessCopy.textContent = 'Ne repaie pas. Actualise cette page dans un instant si ton accès ne se débloque pas automatiquement.';
+        accessMessage.textContent = 'Ton paiement ne sera pas perdu.';
+        return false;
+      }
+      history.replaceState({}, '', location.pathname);
+      await refreshAmbassadorAccess(session);
+      return true;
+    };
+    const showSession = (session) => {
+      const connected = Boolean(session?.user);
+      card.hidden = connected;
+      sessionCard.hidden = !connected;
+      downloads.hidden = true;
+      sessionEmail.textContent = connected ? session.user.email ?? '' : '';
+      if (connected) void (async () => {
+        const confirmed = await confirmReturnedPayment(session);
+        if (!confirmed) await refreshAmbassadorAccess(session);
+      })();
+    };
+    const setMode = (nextMode) => {
+      mode = nextMode;
+      form.hidden = mode === 'pending';
+      resendEmail.hidden = mode !== 'pending';
+      emailField.hidden = mode === 'password';
+      passwordField.hidden = mode === 'pending';
+      confirmationField.hidden = mode !== 'password';
+      password.required = mode === 'signup' || mode === 'login' || mode === 'password';
+      confirmation.required = mode === 'password';
+      password.autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+      passwordHelp.hidden = mode !== 'password';
+      passwordLabel.textContent = mode === 'password' ? 'Nouveau mot de passe' : 'Mot de passe';
+      title.textContent = mode === 'signup' ? 'Crée ton compte.' : mode === 'login' ? 'Content de te revoir.' : mode === 'pending' ? 'Vérifie tes mails.' : 'Crée ton mot de passe.';
+      copy.textContent = mode === 'signup' ? 'Entre ton e-mail et ton mot de passe. Ton compte sera prêt immédiatement.' : mode === 'login' ? 'Connecte-toi avec le même compte que dans AYVO.' : mode === 'pending' ? 'Appuie sur le lien reçu. Cette page s’actualisera automatiquement.' : 'Ton adresse est confirmée. Termine la création de ton compte AYVO.';
+      submit.textContent = mode === 'signup' ? 'Créer mon compte AYVO' : mode === 'login' ? 'Se connecter' : 'Terminer mon compte';
+      switchButton.textContent = mode === 'login' ? 'Créer un compte' : mode === 'pending' ? 'Retour à la connexion' : mode === 'password' ? 'Utiliser un autre compte' : 'J’ai déjà un compte';
+      setMessage();
+    };
+
+    const randomPassword = () => {
+      const bytes = new Uint8Array(28);
+      crypto.getRandomValues(bytes);
+      return `${Array.from(bytes, value => value.toString(16).padStart(2, '0')).join('')}Ay!1`;
+    };
+    const clearPending = () => {
+      clearInterval(pendingTimer);
+      sessionStorage.removeItem(PENDING_KEY);
+      pendingSignup = undefined;
+    };
+    const watchConfirmation = (pending) => {
+      pendingSignup = pending;
+      setMode('pending');
+      setMessage(`Le mail a été envoyé à ${pending.email}.`, true);
+      let checking = false;
+      const check = async () => {
+        if (checking) return;
+        checking = true;
+        const result = await supabase.auth.signInWithPassword({ email: pending.email, password: pending.temporaryPassword });
+        checking = false;
+        if (result.data.session) {
+          clearPending();
+          setMode('password');
+          return;
+        }
+        const limited = result.error?.status === 429 || /rate limit/i.test(result.error?.message ?? '');
+        if (limited) setMessage('Vérification en cours… La page reprendra automatiquement dans un instant.');
+        clearTimeout(pendingTimer);
+        pendingTimer = setTimeout(() => void check(), limited ? 15000 : 6000);
+      };
+      void check();
+    };
+
+    switchButton.addEventListener('click', async () => {
+      if (mode === 'pending' || mode === 'password') {
+        clearPending();
+        await supabase.auth.signOut();
+        setMode('login');
+      } else setMode(mode === 'signup' ? 'login' : 'signup');
+    });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setMessage();
+      const email = String(new FormData(form).get('email') ?? '').trim().toLowerCase();
+      const value = password.value;
+      if (mode === 'password' && !/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{12,}$/.test(value)) return setMessage('Choisis un mot de passe respectant les quatre règles indiquées.');
+      if (mode === 'password' && value !== confirmation.value) return setMessage('Les deux mots de passe ne correspondent pas.');
+      submit.disabled = true;
+      submit.textContent = 'Un instant…';
+      let result;
+      if (mode === 'signup') {
+        result = await supabase.auth.signUp({
+          email,
+          password: value,
+          options: {
+            data: { ayvo_password_pending: false, ayvo_signup_source: 'ambassador_site' },
+          },
+        });
+        if (!result.error && result.data.session) {
+          const finalized = await supabase.rpc('finalize_ambassador_signup');
+          if (finalized.error) result = { ...result, error: finalized.error };
+        }
+      } else if (mode === 'password') {
+        result = await supabase.auth.updateUser({ password: value, data: { ayvo_password_pending: false } });
+        if (!result.error) {
+          const finalized = await supabase.rpc('finalize_ambassador_signup');
+          if (finalized.error) result = { ...result, error: finalized.error };
+        }
+        if (!result.error) {
+          clearPending();
+          const { data: { session } } = await supabase.auth.getSession();
+          showSession(session);
+        }
+      } else result = await supabase.auth.signInWithPassword({ email, password: value });
+      submit.disabled = false;
+      submit.textContent = mode === 'signup' ? 'Créer mon compte AYVO' : mode === 'login' ? 'Se connecter' : 'Terminer mon compte';
+      if (result.error) return setMessage(mode === 'signup' ? 'Impossible de créer ce compte. Vérifie l’adresse ou réessaie dans un instant.' : mode === 'password' ? 'Impossible d’enregistrer ce mot de passe.' : 'E-mail ou mot de passe incorrect.');
+      if (result.data.session) return showSession(result.data.session);
+    });
+    resendEmail.addEventListener('click', async () => {
+      if (!pendingSignup?.email) return;
+      resendEmail.disabled = true;
+      resendEmail.textContent = 'Envoi…';
+      const { error } = await supabase.auth.resend({ type: 'signup', email: pendingSignup.email, options: { emailRedirectTo: PUBLIC_AUTH_REDIRECT } });
+      resendEmail.disabled = false;
+      resendEmail.textContent = 'Renvoyer le mail';
+      setMessage(error ? 'Attends un instant avant de redemander le mail.' : `Un nouveau mail vient d’être envoyé à ${pendingSignup.email}.`, !error);
+    });
+    ambassadorCheckout.addEventListener('click', async () => {
+      ambassadorCheckout.disabled = true;
+      ambassadorCheckout.textContent = 'Ouverture du paiement…';
+      accessMessage.textContent = '';
+      const { data, error } = await supabase.functions.invoke('create-ambassador-checkout');
+      ambassadorCheckout.disabled = false;
+      ambassadorCheckout.textContent = 'Rejoindre la bêta · 20 €';
+      if (error || !data?.url) {
+        accessMessage.textContent = 'Le paiement sécurisé est momentanément indisponible.';
+        return;
+      }
+      location.href = data.url;
+    });
+    androidInvite.addEventListener('click', async () => {
+      if (androidInvite.disabled) return;
+      androidInvite.disabled = true;
+      androidInviteState.textContent = '…';
+      androidInviteCopy.textContent = 'Envoi de l’invitation…';
+      const { data, error } = await supabase.functions.invoke('request-android-beta-invite');
+      if (error || !data?.invited) {
+        androidInvite.disabled = false;
+        androidInviteState.textContent = '↗';
+        androidInviteCopy.textContent = data?.error || 'Impossible d’envoyer le mail pour le moment';
+        return;
+      }
+      androidInvite.classList.add('sent');
+      androidInviteState.textContent = '✓';
+      androidInviteCopy.textContent = 'Mail envoyé';
+    });
+    document.querySelector('#signout').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      showSession(null);
+      setMode('login');
+    });
+    supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) return showSession(null);
+      showSession(session);
+    });
+    const { data: { session } } = await supabase.auth.getSession();
+    const storedPending = sessionStorage.getItem(PENDING_KEY);
+    if (session) showSession(session);
+    else if (storedPending) {
+      try { watchConfirmation(JSON.parse(storedPending)); } catch { clearPending(); setMode('signup'); }
+    } else setMode('signup');
+  </script>
+</body>
+</html>
