@@ -14,6 +14,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="ayvo-app-icon.png">
   <link rel="apple-touch-icon" href="ayvo-app-icon.png">
+  <script>if(new URLSearchParams(location.search).has('listen'))document.documentElement.classList.add('listen-pending')</script>
   <style>
     :root {
       color-scheme: dark;
@@ -33,6 +34,7 @@
     [hidden] { display: none !important; }
 
     html { background: var(--bg); }
+    html.listen-pending body>main{visibility:hidden}html.listen-pending body::before{content:"Chargement de la prod…";position:fixed;inset:0;display:grid;place-items:center;color:#969694;font:800 13px/1.4 Inter,ui-sans-serif,sans-serif;background:#090909}
 
     body {
       margin: 0;
@@ -270,14 +272,15 @@
     .public-listen header { margin:0; display:flex; align-items:center; justify-content:space-between; }
     .public-listen header img { width:104px; filter:brightness(0) invert(1); }
     .public-listen header span,.listen-copy p { color:rgba(255,255,255,.62); font-size:10px; font-weight:900; letter-spacing:1.5px; }
-    .listen-player { width:min(530px,100%); margin:auto; display:flex; flex-direction:column; align-items:stretch; }
-    .listen-cover { width:min(430px,84vw); aspect-ratio:1; margin:clamp(28px,6vh,72px) auto 0; overflow:hidden; border-radius:30px; background:#18181b; box-shadow:0 30px 80px rgba(0,0,0,.48); }
+    .listen-player { width:min(590px,100%); margin:auto; padding-top:clamp(26px,5vh,70px); display:flex; flex-direction:column; align-items:stretch; }
+    .listen-cover { width:min(470px,88vw); aspect-ratio:1; margin:clamp(34px,7vh,84px) auto 0; overflow:hidden; border-radius:34px; background:#18181b; box-shadow:0 34px 95px rgba(0,0,0,.52); }
     .listen-cover img { width:100%; height:100%; object-fit:cover; }
     .listen-cover-empty { width:100%; height:100%; display:grid; place-items:center; font-size:88px; font-weight:950; color:#777; }
-    .listen-copy { min-width:0; margin-top:clamp(30px,5vh,48px); text-align:center; }
+    .listen-copy { min-width:0; margin-top:clamp(30px,5vh,48px); text-align:left; }
     .listen-copy p { margin:0 0 9px; text-transform:none; }
     .listen-copy h1 { margin:0; overflow:hidden; text-overflow:ellipsis; font-size:clamp(27px,5vw,38px); letter-spacing:-1.2px; }
     .listen-copy span { display:block; margin-top:9px; color:rgba(255,255,255,.66); font-size:12px; }
+    .listen-metrics{display:flex;gap:10px;margin-top:18px}.listen-metric{min-width:92px;padding:10px 14px;border:1px solid rgba(255,255,255,.14);border-radius:15px;background:rgba(255,255,255,.075);backdrop-filter:blur(18px)}.listen-metric small{display:block;color:rgba(255,255,255,.48);font-size:8px;font-weight:900;letter-spacing:1px}.listen-metric b{display:block;margin-top:4px;color:#fff;font-size:15px}
     .listen-timeline { margin-top:30px; }
     .listen-progress { --progress:0%; width:100%; height:22px; margin:0; appearance:none; -webkit-appearance:none; background:transparent; cursor:pointer; }
     .listen-progress::-webkit-slider-runnable-track { height:4px; border-radius:999px; background:linear-gradient(90deg,#fff var(--progress),rgba(255,255,255,.24) var(--progress)); }
@@ -288,10 +291,10 @@
     .listen-progress:hover::-webkit-slider-thumb,.listen-progress:focus-visible::-webkit-slider-thumb { opacity:1; transform:scale(1.08); }
     .listen-progress:hover::-moz-range-thumb,.listen-progress:focus-visible::-moz-range-thumb { opacity:1; }
     .listen-times { display:flex; justify-content:space-between; margin-top:-2px; color:rgba(255,255,255,.58); font-size:10px; font-weight:800; }
-    .listen-controls { position:relative; min-height:78px; display:grid; grid-template-columns:1fr 80px 1fr; align-items:center; margin-top:7px; }
-    .listen-toggle { grid-column:2; justify-self:center; width:66px; height:66px; border:0; border-radius:50%; display:grid; place-items:center; padding:0 0 1px 3px; background:#fff; color:#111; font-size:21px; font-weight:950; cursor:pointer; box-shadow:0 12px 32px rgba(0,0,0,.3); transition:transform .15s ease,filter .15s ease; }
+    .listen-controls { position:relative; min-height:92px; display:grid; grid-template-columns:1fr 92px 1fr; align-items:center; margin-top:12px;padding:9px 16px;border:1px solid rgba(255,255,255,.12);border-radius:27px;background:rgba(10,11,14,.4);backdrop-filter:blur(20px); }
+    .listen-toggle { grid-column:2; justify-self:center; width:72px; height:72px; border:1px solid rgba(255,255,255,.2); border-radius:24px; display:grid; place-items:center; padding:0 0 1px 3px; background:rgba(255,255,255,.1); color:#fff; font-size:22px; font-weight:950; cursor:pointer; box-shadow:inset 0 1px rgba(255,255,255,.13),0 12px 32px rgba(0,0,0,.3); backdrop-filter:blur(16px);transition:transform .15s ease,background .15s ease; }
     .listen-toggle.playing { padding-left:0; }
-    .listen-toggle:hover { transform:scale(1.055); filter:brightness(.95); }
+    .listen-toggle:hover { transform:scale(1.035); background:rgba(255,255,255,.16); }
     .listen-toggle:active { transform:scale(.96); }
     .listen-loop { grid-column:3; justify-self:start; width:42px; height:42px; margin-left:13px; display:grid; place-items:center; padding:0; border:0; border-radius:50%; background:transparent; color:rgba(255,255,255,.64); cursor:pointer; transition:color .22s ease,transform .15s ease; }
     .listen-loop svg { width:23px; height:23px; display:block; overflow:visible; transform-origin:50% 50%; }
@@ -299,10 +302,7 @@
     .listen-loop:active { transform:scale(.92); }
     .listen-loop.spinning svg { animation:listen-loop-spin .72s cubic-bezier(.35,.02,.2,1) both; }
     @keyframes listen-loop-spin { 0% { transform:rotate(0); } 58% { transform:rotate(620deg); } 100% { transform:rotate(720deg); } }
-    .public-listen footer { display:grid; justify-items:center; gap:10px; text-align:center; color:rgba(255,255,255,.42); font-size:10px; letter-spacing:1px; }
-    .listen-return { min-height:38px; padding:0 17px; border:1px solid rgba(255,255,255,.14); border-radius:999px; background:rgba(255,255,255,.07); color:rgba(255,255,255,.78); font-size:10px; font-weight:850; cursor:pointer; backdrop-filter:blur(12px); transition:background .16s,color .16s,transform .16s; }
-    .listen-return:hover { background:rgba(255,255,255,.13); color:#fff; }
-    .listen-return:active { transform:scale(.97); }
+    .public-listen footer { display:grid; justify-items:center; padding-top:28px;text-align:center; color:rgba(255,255,255,.42); font-size:10px; letter-spacing:1px; }
     @media (max-height:760px) { .listen-cover { width:min(305px,58vh); margin-top:20px; border-radius:25px; } .listen-copy { margin-top:22px; } .listen-timeline { margin-top:20px; } }
   </style>
 </head>
@@ -383,9 +383,13 @@
     }
     if (localPlayerPreview || (listenToken && /^(?:[a-f0-9]{64}|[A-Za-z0-9_-]{20,64})$/.test(listenToken))) {
       const safe = (value = '') => String(value).replace(/[&<>'"]/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' })[character]);
+      document.documentElement.classList.remove('listen-pending');
       document.body.innerHTML = '<main class="listen-loading"><img src="ayvo-wordmark.png" alt="AYVO"><p>Chargement de la prod…</p></main>';
-      const response = localPlayerPreview ? { ok: true } : await fetch(`https://fmowmheudvczipexpyws.supabase.co/functions/v1/get-shared-item?token=${encodeURIComponent(listenToken)}`, { headers: { apikey: 'sb_publishable_HA2jw5Lrte6dKf2NtpYYGA_48RtY3Xh' } });
-      const shared = localPlayerPreview ? {
+      let response;
+      let shared;
+      try {
+        response = localPlayerPreview ? { ok: true } : await fetch(`https://fmowmheudvczipexpyws.supabase.co/functions/v1/get-shared-item?token=${encodeURIComponent(listenToken)}`, { headers: { apikey: 'sb_publishable_HA2jw5Lrte6dKf2NtpYYGA_48RtY3Xh' }, signal: AbortSignal.timeout(12000) });
+        shared = localPlayerPreview ? {
         author: 'Omei',
         item: {
           title: 'Nouvelle prod',
@@ -394,7 +398,12 @@
           imageUri: 'http://localhost:8080/assets/themes/ayvo-theme-orchidee.jpg',
           exportedAudioUri: 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=',
         },
-      } : await response.json().catch(() => ({}));
+        } : await response.json().catch(() => ({}));
+      } catch (error) {
+        console.error(error);
+        document.body.innerHTML = '<main class="listen-loading"><img src="ayvo-wordmark.png" alt="AYVO"><h1>Chargement impossible</h1><p>La prod n’a pas pu être récupérée. Vérifie ta connexion puis recharge la page.</p><button type="button" onclick="location.reload()">Réessayer</button></main>';
+        await new Promise(() => {});
+      }
       const item = shared.item || {};
       const audioUrl = item.exportedAudioUri || item.workingPreviewUri;
       if (!response.ok || !audioUrl) {
@@ -405,12 +414,11 @@
       const title = String(item.title || item.exportedAudioName || item.workingPreviewName || 'Prod AYVO').replace(/\.(wav|mp3|aiff?|flac|m4a)$/i, '');
       const details = [item.bpm ? `${safe(item.bpm)} BPM` : '', item.musicalKey ? safe(item.musicalKey) : ''].filter(Boolean).join(' · ');
       document.title = `${shared.author || 'Artiste AYVO'} — ${title} — AYVO`;
-      document.body.innerHTML = `<main class="public-listen" style="--listen-cover:${cover ? `url('${safe(cover)}')` : 'none'}"><div class="listen-bg"></div><header><img src="ayvo-wordmark.png" alt="AYVO"><span>PARTAGE AUDIO</span></header><section class="listen-player"><div class="listen-cover">${cover ? `<img src="${safe(cover)}" alt="Cover de ${safe(title)}">` : '<div class="listen-cover-empty">A</div>'}</div><div class="listen-copy"><p>Partagé par ${safe(shared.author || 'un artiste AYVO')}</p><h1>${safe(title)}</h1><span>${details || 'Écoute partagée avec AYVO'}</span></div><audio src="${safe(audioUrl)}" preload="metadata" autoplay></audio><div class="listen-timeline"><input class="listen-progress" type="range" min="0" max="1000" value="0" aria-label="Position dans la prod"><div class="listen-times"><span>0:00</span><span>0:00</span></div></div><div class="listen-controls"><button class="listen-toggle" type="button" aria-label="Lecture ou pause">▶</button><button class="listen-loop" type="button" aria-label="Lire la prod en boucle" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6.4A7 7 0 0 1 18.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m18.5 5.7.1 3.4-3.4.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.8 17.6A7 7 0 0 1 5.5 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m5.5 18.3-.1-3.4 3.4-.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></section><footer><button class="listen-return" type="button">← Retour à la conversation</button><span>Partagé avec AYVO</span></footer></main>`;
+      document.body.innerHTML = `<main class="public-listen" style="--listen-cover:${cover ? `url('${safe(cover)}')` : 'none'}"><div class="listen-bg"></div><header><img src="ayvo-wordmark.png" alt="AYVO"><span>PARTAGE AUDIO</span></header><section class="listen-player"><div class="listen-cover">${cover ? `<img src="${safe(cover)}" alt="Cover de ${safe(title)}">` : '<div class="listen-cover-empty">A</div>'}</div><div class="listen-copy"><p>Partagé par ${safe(shared.author || 'un artiste AYVO')}</p><h1>${safe(title)}</h1><span>Écoute partagée avec AYVO</span></div>${item.bpm || item.musicalKey ? `<div class="listen-metrics">${item.bpm ? `<div class="listen-metric"><small>BPM</small><b>${safe(item.bpm)}</b></div>` : ''}${item.musicalKey ? `<div class="listen-metric"><small>GAMME</small><b>${safe(item.musicalKey)}</b></div>` : ''}</div>` : ''}<audio src="${safe(audioUrl)}" preload="metadata" autoplay></audio><div class="listen-timeline"><input class="listen-progress" type="range" min="0" max="1000" value="0" aria-label="Position dans la prod"><div class="listen-times"><span>0:00</span><span>0:00</span></div></div><div class="listen-controls"><button class="listen-toggle" type="button" aria-label="Lecture ou pause">▶</button><button class="listen-loop" type="button" aria-label="Lire la prod en boucle" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6.4A7 7 0 0 1 18.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m18.5 5.7.1 3.4-3.4.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.8 17.6A7 7 0 0 1 5.5 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m5.5 18.3-.1-3.4 3.4-.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></section><footer><span>Partagé avec AYVO</span></footer></main>`;
       const audio = document.querySelector('audio');
       const toggle = document.querySelector('.listen-toggle');
       const progress = document.querySelector('.listen-progress');
       const loop = document.querySelector('.listen-loop');
-      const returnButton = document.querySelector('.listen-return');
       const current = document.querySelector('.listen-times span:first-child');
       const duration = document.querySelector('.listen-times span:last-child');
       const format = seconds => {
@@ -437,10 +445,6 @@
         loop.setAttribute('aria-pressed', String(audio.loop));
       });
       loop.addEventListener('animationend', () => loop.classList.remove('spinning'));
-      returnButton.addEventListener('click', () => {
-        if (history.length > 1) history.back();
-        else window.close();
-      });
       ['play','pause','timeupdate','durationchange','loadedmetadata'].forEach(name => audio.addEventListener(name, refresh));
       audio.play().catch(() => refresh());
       await new Promise(() => {});
