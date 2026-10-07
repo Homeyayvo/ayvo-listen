@@ -432,7 +432,7 @@
         airplay.className = 'listen-airplay';
         airplay.type = 'button';
         airplay.setAttribute('aria-label', 'Choisir une sortie audio');
-        airplay.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9V5h14v4M5 15v4h14v-4M9 16.5l3-3 3 3"/><path d="M7.5 11.5h9"/></svg>';
+        airplay.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5h16v3M4 16v3h16v-3"/><path d="M7 13.5a6 6 0 0 1 10 0M9.4 16.1a3.2 3.2 0 0 1 5.2 0"/><path d="m12 13 4.2 5H7.8z" fill="currentColor" stroke="none"/></svg>';
         controls.append(airplay);
         airplay.addEventListener('click', () => audio.webkitShowPlaybackTargetPicker?.());
       }
