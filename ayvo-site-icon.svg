@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-  <rect width="1000" height="1000" fill="#171719"/>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%"><feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="#000" flood-opacity=".7"/></filter>
+  </defs>
+  <rect width="1000" height="1000" fill="#303033" filter="url(#shadow)"/>
   <image href="ayvo-app-icon.png" width="1000" height="1000" preserveAspectRatio="xMidYMid slice"/>
+  <image href="grain-texture-neutral.png" width="1000" height="1000" preserveAspectRatio="xMidYMid slice" opacity=".16"/>
 </svg>
