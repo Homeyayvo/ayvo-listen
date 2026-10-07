@@ -266,12 +266,12 @@
     .listen-loading img { width: 116px; filter: brightness(0) invert(1); }
     .listen-loading h1 { margin: 18px 0 0; }
     .listen-loading p { max-width: 390px; margin: 0; color: var(--muted); line-height: 1.55; }
-    .public-listen { position:relative; isolation:isolate; width:100%; min-height:100svh; padding:max(24px,env(safe-area-inset-top)) clamp(24px,5vw,68px) max(30px,env(safe-area-inset-bottom)); overflow-x:hidden; }
+    .public-listen { position:relative; isolation:isolate; width:100%; min-height:100svh; padding:max(24px,env(safe-area-inset-top)) clamp(24px,5vw,68px) max(72px,calc(env(safe-area-inset-bottom) + 42px)); overflow-x:hidden; }
     .listen-bg { position:fixed; z-index:-2; inset:-45px; background-image:var(--listen-cover),radial-gradient(circle at 50% 32%,var(--listen-accent,#241214),#080809 70%); background-position:center; background-size:cover; filter:blur(38px) brightness(.23) saturate(.85); transform:scale(1.12); }
     .public-listen::after { content:""; position:fixed; z-index:-1; inset:0; background:rgba(4,4,6,.5); }
-    .listen-header{width:min(720px,100%);margin:0 auto;display:flex;align-items:center;justify-content:space-between}.listen-back{width:54px;height:54px;display:grid;place-items:center;border:0;background:transparent;color:#fff;cursor:pointer}.listen-back svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}.listen-header span{color:rgba(255,255,255,.82);font-size:11px;font-weight:950;letter-spacing:2.4px}
-    .listen-player { width:min(720px,100%); margin:0 auto; padding-top:clamp(36px,6vh,76px); display:flex; flex-direction:column; align-items:stretch; }
-    .listen-metrics{min-height:42px;display:flex;justify-content:center;gap:10px;margin:0 0 18px}.listen-metric{min-width:104px;padding:9px 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.1);text-align:center;backdrop-filter:blur(18px)}.listen-metric small{display:none}.listen-metric b{display:block;color:#fff;font-size:14px;letter-spacing:.5px}.listen-metric b::after{content:attr(data-unit)}
+    .listen-header{width:min(720px,100%);margin:0 auto;display:flex;align-items:center;justify-content:space-between}.listen-header img{width:92px;height:auto;display:block}.listen-header span{color:rgba(255,255,255,.82);font-size:11px;font-weight:950;letter-spacing:2.4px}
+    .listen-player { width:min(720px,100%); margin:0 auto; padding-top:clamp(24px,4vh,52px); display:flex; flex-direction:column; align-items:stretch; }
+    .listen-metrics{min-height:26px;display:flex;justify-content:center;align-items:center;gap:8px;margin:0 0 10px}.listen-metric{min-width:68px;min-height:26px;padding:4px 9px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(255,255,255,.07);text-align:center;backdrop-filter:blur(18px)}.listen-metric small{display:none}.listen-metric b{display:block;color:#fff;font-size:11px;line-height:1;letter-spacing:.35px}.listen-metric b::after{content:attr(data-unit)}
     .listen-cover { width:min(620px,84vw); aspect-ratio:1; margin:0 auto; overflow:hidden; border-radius:clamp(28px,5vw,46px); background:#202023; box-shadow:0 34px 95px rgba(0,0,0,.35); }
     .listen-cover img { width:100%; height:100%; object-fit:cover; }
     .listen-cover-empty { width:100%; height:100%; display:grid; place-items:center; color:#8b8b8d }.listen-cover-empty svg{width:26%;height:26%;fill:none;stroke:currentColor;stroke-width:2}
@@ -288,10 +288,11 @@
     .listen-progress:hover::-webkit-slider-thumb,.listen-progress:focus-visible::-webkit-slider-thumb { opacity:1; transform:scale(1.08); }
     .listen-progress:hover::-moz-range-thumb,.listen-progress:focus-visible::-moz-range-thumb { opacity:1; }
     .listen-times { display:flex; justify-content:space-between; margin-top:-2px; color:rgba(255,255,255,.58); font-size:10px; font-weight:800; }
-    .listen-controls { min-height:104px; display:grid; grid-template-columns:1fr 112px 1fr; align-items:center; margin-top:10px; }
-    .listen-toggle { grid-column:2; justify-self:center; width:92px; height:92px; border:0; border-radius:50%; display:grid; place-items:center; padding:0 0 1px 4px; background:#fff; color:#09090b; font-size:28px; font-weight:950; cursor:pointer; box-shadow:0 16px 38px rgba(0,0,0,.28); transition:transform .15s ease,filter .15s ease; }
+    .listen-controls { min-height:82px; display:grid; grid-template-columns:1fr 112px 1fr; align-items:center; margin-top:6px; margin-bottom:14px; }
+    .listen-toggle { grid-column:2; justify-self:center; width:46px; height:46px; border:0; display:grid; place-items:center; padding:0 0 1px 3px; background:transparent; color:#fff; font-size:29px; font-weight:950; cursor:pointer; transition:transform .15s ease,filter .15s ease; }
     .listen-toggle.playing { padding-left:0; }
-    .listen-toggle:hover { transform:scale(1.035); filter:brightness(.94); }
+    .listen-toggle:hover { transform:scale(1.08); filter:brightness(.94); }
+    .listen-airplay{border:0;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}.listen-airplay svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
     .listen-toggle:active { transform:scale(.96); }
     .listen-download{grid-column:1;justify-self:center;width:52px;height:52px;display:grid;place-items:center;border:0;background:transparent;color:#fff;cursor:pointer}.listen-download svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.listen-loop { grid-column:3; justify-self:center; width:52px; height:52px; display:grid; place-items:center; padding:0; border:0; border-radius:50%; background:transparent; color:#fff; cursor:pointer; transition:color .22s ease,transform .15s ease; }
     .listen-loop svg { width:23px; height:23px; display:block; overflow:visible; transform-origin:50% 50%; }
@@ -300,7 +301,7 @@
     .listen-loop.spinning svg { animation:listen-loop-spin .72s cubic-bezier(.35,.02,.2,1) both; }
     @keyframes listen-loop-spin { 0% { transform:rotate(0); } 58% { transform:rotate(620deg); } 100% { transform:rotate(720deg); } }
     .public-listen footer { display:grid; justify-items:center; padding-top:28px;text-align:center; color:rgba(255,255,255,.38); font-size:10px; letter-spacing:1px; }
-    @media (max-width:640px){.public-listen{padding-left:24px;padding-right:24px}.listen-header{padding:0 2px}.listen-header span{font-size:10px}.listen-player{padding-top:34px}.listen-cover{width:min(84vw,620px)}.listen-toggle{width:82px;height:82px}.listen-controls{grid-template-columns:1fr 94px 1fr}}
+    @media (max-width:640px){.public-listen{padding-left:24px;padding-right:24px}.listen-header{padding:0 2px}.listen-header span{font-size:10px}.listen-player{padding-top:26px}.listen-cover{width:min(84vw,620px)}.listen-toggle{width:54px;height:54px;font-size:27px}.listen-controls{grid-template-columns:1fr 94px 1fr;min-height:68px;margin-bottom:18px}}
     @media (max-height:760px) { .listen-player{padding-top:20px}.listen-cover { width:min(330px,55vh); border-radius:25px; } .listen-copy { margin-top:18px; } .listen-timeline { margin-top:18px; } }
   </style>
 </head>
@@ -411,15 +412,33 @@
       const cover = item.imageUri || '';
       const title = String(item.title || item.exportedAudioName || item.workingPreviewName || 'Prod AYVO').replace(/\.(wav|mp3|aiff?|flac|m4a)$/i, '');
       const accent = item.accentColor || (Array.isArray(item.themeColors) ? item.themeColors[1] : '') || '#241214';
-      const downloadName = String(item.exportedAudioName || item.workingPreviewName || `${title}.wav`).replace(/[\\/:*?"<>|]+/g, '-');
+      const downloadDetails = [item.bpm ? `${item.bpm} BPM` : '', item.musicalKey || ''].filter(Boolean).join(', ');
+      const downloadArtist = String(shared.author || '').replace(/[\\/:*?"<>|]+/g, ' ').trim().toLocaleLowerCase('fr-FR');
+      const downloadExtension = (String(item.exportedAudioName || item.workingPreviewName || '').match(/\.(wav|mp3|aiff?|flac|m4a)$/i)?.[1] || 'wav').toLowerCase().replace(/^waa$/, 'wav');
+      const downloadName = `${title}${downloadDetails ? ` - ${downloadDetails}` : ''}${downloadArtist ? ` @${downloadArtist}` : ''}.${downloadExtension}`.replace(/[\\/:*?"<>|]+/g, '-');
       document.title = `${shared.author || 'Artiste AYVO'} — ${title} — AYVO`;
       document.body.innerHTML = `<main class="public-listen" style="--listen-cover:${cover ? `url('${safe(cover)}')` : 'none'};--listen-accent:${safe(accent)}"><div class="listen-bg"></div><header class="listen-header"><button class="listen-back" type="button" aria-label="Revenir en arrière"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><span>LECTURE EN COURS</span></header><section class="listen-player">${item.bpm || item.musicalKey ? `<div class="listen-metrics">${item.bpm ? `<div class="listen-metric"><b>${safe(item.bpm)} BPM</b></div>` : ''}${item.musicalKey ? `<div class="listen-metric"><b>${safe(item.musicalKey)}</b></div>` : ''}</div>` : '<div class="listen-metrics"></div>'}<div class="listen-cover">${cover ? `<img src="${safe(cover)}" alt="Cover de ${safe(title)}">` : '<div class="listen-cover-empty"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M7 18.5c0-3 2.5-5.5 5.5-5.5h13l5.5 6h20.5c3 0 5.5 2.5 5.5 5.5v24c0 3-2.5 5.5-5.5 5.5h-39C9.5 54 7 51.5 7 48.5z"/><path d="M8 27h48"/></svg></div>'}</div><div class="listen-copy"><h1>${safe(title)}</h1><p>Partagé par ${safe(shared.author || 'un artiste AYVO')}</p></div><audio src="${safe(audioUrl)}" preload="metadata" autoplay></audio><div class="listen-timeline"><input class="listen-progress" type="range" min="0" max="1000" value="0" aria-label="Position dans la prod"><div class="listen-times"><span>0:00</span><span>0:00</span></div></div><div class="listen-controls"><button class="listen-download" type="button" aria-label="Télécharger la prod"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17.5v2h14v-2"/></svg></button><button class="listen-toggle" type="button" aria-label="Lecture ou pause">▶</button><button class="listen-loop" type="button" aria-label="Lire la prod en boucle" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6.4A7 7 0 0 1 18.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m18.5 5.7.1 3.4-3.4.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.8 17.6A7 7 0 0 1 5.5 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m5.5 18.3-.1-3.4 3.4-.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></section><footer><span>Partagé avec AYVO</span></footer></main>`;
+      const headerBack = document.querySelector('.listen-back');
+      if (headerBack) {
+        headerBack.outerHTML = '<img src="ayvo-wordmark.png" alt="AYVO">';
+      }
+      const loopButton = document.querySelector('.listen-loop');
+      loopButton?.remove();
+      const controls = document.querySelector('.listen-controls');
+      if (controls) {
+        const airplay = document.createElement('button');
+        airplay.className = 'listen-airplay';
+        airplay.type = 'button';
+        airplay.setAttribute('aria-label', 'Choisir une sortie audio');
+        airplay.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8V5h14v3M5 16v3h14v-3M8 12h8M12 15l-3 4h6z"/></svg>';
+        controls.append(airplay);
+        airplay.addEventListener('click', () => audio.webkitShowPlaybackTargetPicker?.());
+      }
       const audio = document.querySelector('audio');
+      audio.loop = true;
       const toggle = document.querySelector('.listen-toggle');
       const progress = document.querySelector('.listen-progress');
-      const loop = document.querySelector('.listen-loop');
       const download = document.querySelector('.listen-download');
-      const back = document.querySelector('.listen-back');
       const current = document.querySelector('.listen-times span:first-child');
       const duration = document.querySelector('.listen-times span:last-child');
       const format = seconds => {
@@ -436,7 +455,6 @@
         progress.style.setProperty('--progress', `${ratio * 100}%`);
       };
       toggle.addEventListener('click', () => audio.paused ? audio.play() : audio.pause());
-      back.addEventListener('click', () => history.length > 1 ? history.back() : window.close());
       download.addEventListener('click', async () => {
         download.disabled = true;
         try {
@@ -450,15 +468,6 @@
         finally { download.disabled = false; }
       });
       progress.addEventListener('input', () => { if (audio.duration) audio.currentTime = (Number(progress.value) / 1000) * audio.duration; });
-      loop.addEventListener('click', () => {
-        audio.loop = !audio.loop;
-        loop.classList.toggle('active', audio.loop);
-        loop.classList.remove('spinning');
-        void loop.offsetWidth;
-        loop.classList.add('spinning');
-        loop.setAttribute('aria-pressed', String(audio.loop));
-      });
-      loop.addEventListener('animationend', () => loop.classList.remove('spinning'));
       ['play','pause','timeupdate','durationchange','loadedmetadata'].forEach(name => audio.addEventListener(name, refresh));
       audio.play().catch(() => refresh());
       await new Promise(() => {});
