@@ -269,30 +269,32 @@
     .public-listen { position:relative; isolation:isolate; width:100%; min-height:100svh; padding:max(24px,env(safe-area-inset-top)) clamp(24px,5vw,68px) max(72px,calc(env(safe-area-inset-bottom) + 42px)); overflow-x:hidden; }
     .listen-bg { position:fixed; z-index:-2; inset:-45px; background-image:var(--listen-cover),radial-gradient(circle at 50% 32%,var(--listen-accent,#241214),#080809 70%); background-position:center; background-size:cover; filter:blur(38px) brightness(.23) saturate(.85); transform:scale(1.12); }
     .public-listen::after { content:""; position:fixed; z-index:-1; inset:0; background:rgba(4,4,6,.5); }
-    .listen-header{width:min(720px,100%);margin:0 auto;display:flex;align-items:center;justify-content:space-between}.listen-header img{width:92px;height:auto;display:block}.listen-header span{color:rgba(255,255,255,.82);font-size:11px;font-weight:950;letter-spacing:2.4px}
+    .listen-header{width:min(720px,100%);margin:0 auto;display:flex;align-items:center;justify-content:space-between}.listen-header img{width:92px;height:auto;display:block;filter:brightness(0) invert(1)}.listen-header span{color:rgba(255,255,255,.82);font-size:11px;font-weight:950;letter-spacing:2.4px}.listen-app-download{border:0;background:transparent;color:#fff;font:800 11px/1 inherit;letter-spacing:.2px;cursor:pointer;padding:8px 0}.listen-app-download:hover{opacity:.75}
     .listen-player { width:min(720px,100%); margin:0 auto; padding-top:clamp(24px,4vh,52px); display:flex; flex-direction:column; align-items:stretch; }
     .listen-metrics{min-height:26px;display:flex;justify-content:center;align-items:center;gap:8px;margin:0 0 10px}.listen-metric{min-width:68px;min-height:26px;padding:4px 9px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(255,255,255,.07);text-align:center;backdrop-filter:blur(18px)}.listen-metric small{display:none}.listen-metric b{display:block;color:#fff;font-size:11px;line-height:1;letter-spacing:.35px}.listen-metric b::after{content:attr(data-unit)}
     .listen-cover { width:min(620px,84vw); aspect-ratio:1; margin:0 auto; overflow:hidden; border-radius:clamp(28px,5vw,46px); background:#202023; box-shadow:0 34px 95px rgba(0,0,0,.35); }
     .listen-cover img { width:100%; height:100%; object-fit:cover; }
     .listen-cover-empty { width:100%; height:100%; display:grid; place-items:center; color:#8b8b8d }.listen-cover-empty svg{width:26%;height:26%;fill:none;stroke:currentColor;stroke-width:2}
     .listen-copy { min-width:0; margin-top:clamp(24px,4vh,38px); text-align:center; }
-    .listen-copy h1 { margin:0; overflow:hidden; text-overflow:ellipsis; font-size:clamp(29px,5.4vw,43px); letter-spacing:-1.4px; }
+    .listen-copy h1 { margin:0; overflow:visible; text-overflow:ellipsis; line-height:1.14; padding-bottom:.08em; font-size:clamp(29px,5.4vw,43px); letter-spacing:-1.4px; }
     .listen-copy p { margin:8px 0 0; color:rgba(255,255,255,.62); font-size:13px; font-weight:500; letter-spacing:0; }
     .listen-timeline { margin-top:clamp(26px,4vh,42px); }
     .listen-progress { --progress:0%; width:100%; height:22px; margin:0; appearance:none; -webkit-appearance:none; background:transparent; cursor:pointer; }
     .listen-progress::-webkit-slider-runnable-track { height:4px; border-radius:999px; background:linear-gradient(90deg,#fff var(--progress),rgba(255,255,255,.24) var(--progress)); }
     .listen-progress::-moz-range-track { height:4px; border-radius:999px; background:rgba(255,255,255,.24); }
     .listen-progress::-moz-range-progress { height:4px; border-radius:999px; background:#fff; }
-    .listen-progress::-webkit-slider-thumb { width:13px; height:13px; margin-top:-4.5px; appearance:none; -webkit-appearance:none; border:0; border-radius:50%; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.45); opacity:0; transition:opacity .14s,transform .14s; }
-    .listen-progress::-moz-range-thumb { width:13px; height:13px; border:0; border-radius:50%; background:#fff; opacity:0; }
-    .listen-progress:hover::-webkit-slider-thumb,.listen-progress:focus-visible::-webkit-slider-thumb { opacity:1; transform:scale(1.08); }
-    .listen-progress:hover::-moz-range-thumb,.listen-progress:focus-visible::-moz-range-thumb { opacity:1; }
+    .listen-progress { touch-action:none; will-change:--progress; }
+    .listen-progress::-webkit-slider-thumb { width:13px; height:13px; margin-top:-4.5px; appearance:none; -webkit-appearance:none; border:0; border-radius:50%; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.45); opacity:1; transition:transform .1s; }
+    .listen-progress::-moz-range-thumb { width:13px; height:13px; border:0; border-radius:50%; background:#fff; opacity:1; }
+    .listen-progress:hover::-webkit-slider-thumb,.listen-progress:focus-visible::-webkit-slider-thumb { transform:scale(1.08); }
+    .listen-progress:hover::-moz-range-thumb,.listen-progress:focus-visible::-moz-range-thumb { transform:scale(1.08); }
     .listen-times { display:flex; justify-content:space-between; margin-top:-2px; color:rgba(255,255,255,.58); font-size:10px; font-weight:800; }
     .listen-controls { min-height:82px; display:grid; grid-template-columns:1fr 112px 1fr; align-items:center; margin-top:6px; margin-bottom:14px; }
-    .listen-toggle { grid-column:2; justify-self:center; width:46px; height:46px; border:0; display:grid; place-items:center; padding:0 0 1px 3px; background:transparent; color:#fff; font-size:29px; font-weight:950; cursor:pointer; transition:transform .15s ease,filter .15s ease; }
+    .listen-toggle { grid-column:2; justify-self:center; width:62px; height:62px; border:0; display:grid; place-items:center; padding:0 0 1px 5px; background:transparent; color:#fff; font-size:39px; line-height:1; font-weight:950; cursor:pointer; transition:transform .15s ease,filter .15s ease; }
     .listen-toggle.playing { padding-left:0; }
     .listen-toggle:hover { transform:scale(1.08); filter:brightness(.94); }
-    .listen-airplay{border:0;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}.listen-airplay svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+    .listen-airplay{border:0;background:transparent;color:#fff;cursor:pointer;display:grid;place-items:center}.listen-airplay svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .listen-app-sheet{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:24px;background:rgba(3,4,5,.62);backdrop-filter:blur(18px)}.listen-app-sheet[hidden]{display:none}.listen-app-card{width:min(390px,100%);padding:28px;border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(24,25,28,.9);box-shadow:0 24px 80px rgba(0,0,0,.45)}.listen-app-card h2{margin:0 0 20px;font-size:20px}.listen-app-options{display:grid;gap:10px}.listen-app-options a,.listen-app-close{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid rgba(255,255,255,.14);border-radius:12px;color:#fff;text-decoration:none;background:rgba(255,255,255,.07);font-weight:800}.listen-app-close{width:100%;margin-top:14px;cursor:pointer;color:rgba(255,255,255,.68);background:transparent}
     .listen-toggle:active { transform:scale(.96); }
     .listen-download{grid-column:1;justify-self:center;width:52px;height:52px;display:grid;place-items:center;border:0;background:transparent;color:#fff;cursor:pointer}.listen-download svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.listen-loop { grid-column:3; justify-self:center; width:52px; height:52px; display:grid; place-items:center; padding:0; border:0; border-radius:50%; background:transparent; color:#fff; cursor:pointer; transition:color .22s ease,transform .15s ease; }
     .listen-loop svg { width:23px; height:23px; display:block; overflow:visible; transform-origin:50% 50%; }
@@ -301,7 +303,7 @@
     .listen-loop.spinning svg { animation:listen-loop-spin .72s cubic-bezier(.35,.02,.2,1) both; }
     @keyframes listen-loop-spin { 0% { transform:rotate(0); } 58% { transform:rotate(620deg); } 100% { transform:rotate(720deg); } }
     .public-listen footer { display:grid; justify-items:center; padding-top:28px;text-align:center; color:rgba(255,255,255,.38); font-size:10px; letter-spacing:1px; }
-    @media (max-width:640px){.public-listen{padding-left:24px;padding-right:24px}.listen-header{padding:0 2px}.listen-header span{font-size:10px}.listen-player{padding-top:26px}.listen-cover{width:min(84vw,620px)}.listen-toggle{width:54px;height:54px;font-size:27px}.listen-controls{grid-template-columns:1fr 94px 1fr;min-height:68px;margin-bottom:18px}}
+    @media (max-width:640px){.public-listen{padding-left:24px;padding-right:24px}.listen-header{padding:0 2px}.listen-header span{font-size:10px}.listen-player{padding-top:26px}.listen-cover{width:min(84vw,620px)}.listen-toggle{width:62px;height:62px;font-size:36px}.listen-controls{grid-template-columns:1fr 94px 1fr;min-height:68px;margin-bottom:18px}}
     @media (max-height:760px) { .listen-player{padding-top:20px}.listen-cover { width:min(330px,55vh); border-radius:25px; } .listen-copy { margin-top:18px; } .listen-timeline { margin-top:18px; } }
   </style>
 </head>
@@ -420,7 +422,7 @@
       document.body.innerHTML = `<main class="public-listen" style="--listen-cover:${cover ? `url('${safe(cover)}')` : 'none'};--listen-accent:${safe(accent)}"><div class="listen-bg"></div><header class="listen-header"><button class="listen-back" type="button" aria-label="Revenir en arrière"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button><span>LECTURE EN COURS</span></header><section class="listen-player">${item.bpm || item.musicalKey ? `<div class="listen-metrics">${item.bpm ? `<div class="listen-metric"><b>${safe(item.bpm)} BPM</b></div>` : ''}${item.musicalKey ? `<div class="listen-metric"><b>${safe(item.musicalKey)}</b></div>` : ''}</div>` : '<div class="listen-metrics"></div>'}<div class="listen-cover">${cover ? `<img src="${safe(cover)}" alt="Cover de ${safe(title)}">` : '<div class="listen-cover-empty"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M7 18.5c0-3 2.5-5.5 5.5-5.5h13l5.5 6h20.5c3 0 5.5 2.5 5.5 5.5v24c0 3-2.5 5.5-5.5 5.5h-39C9.5 54 7 51.5 7 48.5z"/><path d="M8 27h48"/></svg></div>'}</div><div class="listen-copy"><h1>${safe(title)}</h1><p>Partagé par ${safe(shared.author || 'un artiste AYVO')}</p></div><audio src="${safe(audioUrl)}" preload="metadata" autoplay></audio><div class="listen-timeline"><input class="listen-progress" type="range" min="0" max="1000" value="0" aria-label="Position dans la prod"><div class="listen-times"><span>0:00</span><span>0:00</span></div></div><div class="listen-controls"><button class="listen-download" type="button" aria-label="Télécharger la prod"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17.5v2h14v-2"/></svg></button><button class="listen-toggle" type="button" aria-label="Lecture ou pause">▶</button><button class="listen-loop" type="button" aria-label="Lire la prod en boucle" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 6.4A7 7 0 0 1 18.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m18.5 5.7.1 3.4-3.4.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.8 17.6A7 7 0 0 1 5.5 15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m5.5 18.3-.1-3.4 3.4-.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></section><footer><span>Partagé avec AYVO</span></footer></main>`;
       const headerBack = document.querySelector('.listen-back');
       if (headerBack) {
-        headerBack.outerHTML = '<img src="ayvo-wordmark.png" alt="AYVO">';
+        headerBack.outerHTML = '<img src="ayvo-wordmark.png" alt="AYVO"><button class="listen-app-download" type="button">Télécharger AYVO</button>';
       }
       const loopButton = document.querySelector('.listen-loop');
       loopButton?.remove();
@@ -430,9 +432,21 @@
         airplay.className = 'listen-airplay';
         airplay.type = 'button';
         airplay.setAttribute('aria-label', 'Choisir une sortie audio');
-        airplay.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8V5h14v3M5 16v3h14v-3M8 12h8M12 15l-3 4h6z"/></svg>';
+        airplay.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9V5h14v4M5 15v4h14v-4M9 16.5l3-3 3 3"/><path d="M7.5 11.5h9"/></svg>';
         controls.append(airplay);
         airplay.addEventListener('click', () => audio.webkitShowPlaybackTargetPicker?.());
+      }
+      const appButton = document.querySelector('.listen-app-download');
+      if (appButton) {
+        const sheet = document.createElement('div');
+        sheet.className = 'listen-app-sheet';
+        sheet.hidden = true;
+        sheet.innerHTML = '<div class="listen-app-card" role="dialog" aria-modal="true" aria-label="Télécharger AYVO"><h2>Télécharger AYVO</h2><div class="listen-app-options"><a href="#" aria-label="Télécharger sur iPhone">Télécharger sur iPhone</a><a href="#" aria-label="Télécharger sur Android">Télécharger sur Android</a><a href="#" aria-label="Télécharger sur Mac">Télécharger sur Mac</a><a href="#" aria-label="Télécharger sur Windows">Télécharger sur Windows</a></div><button class="listen-app-close" type="button">Fermer</button></div>';
+        document.body.append(sheet);
+        const close = () => { sheet.hidden = true; };
+        appButton.addEventListener('click', () => { sheet.hidden = false; });
+        sheet.querySelector('.listen-app-close').addEventListener('click', close);
+        sheet.addEventListener('click', event => { if (event.target === sheet) close(); });
       }
       const audio = document.querySelector('audio');
       audio.loop = true;
